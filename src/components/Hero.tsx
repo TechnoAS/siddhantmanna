@@ -16,7 +16,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="min-h-screen h-screen flex flex-col sm:flex-row items-center justify-center px-4 sm:px-6 lg:px-8 mt-20 sm:mt-24 relative overflow-hidden z-0"
+      className="min-h-screen h-screen flex flex-col sm:flex-row items-center justify-center px-4 sm:px-6 lg:px-8 mt-8 sm:mt-24 relative overflow-hidden z-0"
     >
       {/* Hero Image - Mobile: Top, Desktop: Left side */}
       {/* Mobile Hero Image - Above text */}
@@ -24,7 +24,7 @@ export default function Hero() {
         initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.2, delay: 0.3, ease: "easeOut" }}
-        className="absolute sm:hidden top-12 left-0 right-0 h-[42vh] pointer-events-none z-0 w-screen"
+        className="absolute sm:hidden top-4 left-0 right-0 h-[42vh] pointer-events-none z-0 w-screen"
       >
         <div className="relative h-full w-full">
           {/* Bottom edge blending for mobile */}
@@ -63,7 +63,7 @@ export default function Hero() {
               src="/portfolio.png"
               alt="Hero illustration"
               fill
-              className="object-contain object-top opacity-[0.15] mix-blend-normal dark:mix-blend-screen"
+              className="object-contain object-top opacity-[0.35] mix-blend-normal dark:mix-blend-screen"
               priority
               quality={95}
               sizes="100vw"
@@ -71,7 +71,7 @@ export default function Hero() {
                 objectPosition: "50% 12%",
                 transform: "scale(0.98)",
                 transformOrigin: "50% 10%",
-                filter: "brightness(1.20) saturate(1.08)"
+                filter: "brightness(1.5) saturate(1.15) contrast(1.1)"
               }}
             />
           </div>
@@ -191,7 +191,7 @@ export default function Hero() {
         </div>
       </motion.div>
 
-      <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8 mt-[45vh] sm:mt-0">
+      <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8 mt-[38vh] sm:mt-0">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
