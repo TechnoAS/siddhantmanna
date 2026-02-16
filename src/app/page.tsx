@@ -7,48 +7,41 @@ import Experiments from "@/components/Experiments";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import SmoothScroll from "@/components/SmoothScroll";
+import Experience from "@/components/Experience";
+import AnimatedStats from "@/components/AnimatedStats";
+import Testimonials from "@/components/Testimonials";
+import ErrorBoundary from "@/components/ErrorBoundary";
+import { PERSONAL, SOCIAL, SITE, SKILLS } from "@/lib/constants";
+import { fetchGitHubRepos } from "@/lib/github";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://siddhantmanna.dev";
+const siteUrl = SITE.url;
 
-export default function Home() {
+export default async function Home() {
+  // Server-side data fetching with ISR (revalidates every hour)
+  const repos = await fetchGitHubRepos();
+
   // JSON-LD Structured Data for SEO
   const personSchema = {
     "@context": "https://schema.org",
     "@type": "Person",
-    name: "Siddhant Manna",
-    jobTitle: "Full Stack Developer",
-    description: "Full stack developer and final-year IT student specializing in React, Next.js, Node.js, TypeScript, and modern web technologies. Also a passionate wildlife photographer.",
+    name: PERSONAL.name,
+    jobTitle: PERSONAL.jobTitle,
+    description: PERSONAL.description,
     url: siteUrl,
-    image: `${siteUrl}/portfolio.png`,
-    email: "official.siddhantmanna@gmail.com",
+    image: `${siteUrl}${SITE.ogImage}`,
+    email: PERSONAL.email,
     sameAs: [
-      "https://www.linkedin.com/in/siddhant-manna/",
-      "https://github.com/TechnoAS",
+      SOCIAL.linkedin,
+      SOCIAL.github,
     ],
     alumniOf: {
       "@type": "EducationalOrganization",
-      name: "Meghnad Saha Institute of Technology",
+      name: PERSONAL.university,
     },
-    knowsAbout: [
-      "React",
-      "Next.js",
-      "TypeScript",
-      "JavaScript",
-      "Node.js",
-      "Express",
-      "MongoDB",
-      "PostgreSQL",
-      "GraphQL",
-      "Firebase",
-      "Tailwind CSS",
-      "Framer Motion",
-      "Web Development",
-      "Full Stack Development",
-      "Software Engineering",
-    ],
+    knowsAbout: [...SKILLS],
     hasOccupation: {
       "@type": "Occupation",
-      name: "Full Stack Developer",
+      name: PERSONAL.jobTitle,
       occupationLocation: {
         "@type": "Country",
         name: "India",
@@ -59,17 +52,11 @@ export default function Home() {
   const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "Siddhant Manna - Full Stack Developer Portfolio",
+    name: `${PERSONAL.name} - ${PERSONAL.jobTitle} Portfolio`,
     url: siteUrl,
     description: "Professional portfolio showcasing projects, skills, and experience as a full stack developer",
-    author: {
-      "@type": "Person",
-      name: "Siddhant Manna",
-    },
-    publisher: {
-      "@type": "Person",
-      name: "Siddhant Manna",
-    },
+    author: { "@type": "Person", name: PERSONAL.name },
+    publisher: { "@type": "Person", name: PERSONAL.name },
     inLanguage: "en-US",
   };
 
@@ -77,16 +64,10 @@ export default function Home() {
     "@context": "https://schema.org",
     "@type": "CreativeWork",
     "@id": `${siteUrl}/#portfolio`,
-    name: "Siddhant Manna Portfolio",
+    name: `${PERSONAL.name} Portfolio`,
     description: "Professional portfolio website showcasing full stack development projects and skills",
-    creator: {
-      "@type": "Person",
-      name: "Siddhant Manna",
-    },
-    about: {
-      "@type": "Thing",
-      name: "Web Development",
-    },
+    creator: { "@type": "Person", name: PERSONAL.name },
+    about: { "@type": "Thing", name: "Web Development" },
   };
 
   return (
@@ -104,15 +85,18 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(portfolioSchema) }}
       />
-      
-      <main className="min-h-screen pb-20 sm:pb-24 lg:pb-0 relative">
+
+      <main id="main-content" className="min-h-screen pb-20 sm:pb-24 lg:pb-0 relative">
         <SmoothScroll />
         <Header />
-        <Hero />
-        <About />
-        <Projects />
-        <Experiments />
-        <Contact />
+        <ErrorBoundary><Hero /></ErrorBoundary>
+        <ErrorBoundary><About /></ErrorBoundary>
+        <ErrorBoundary><AnimatedStats /></ErrorBoundary>
+        <ErrorBoundary><Experience /></ErrorBoundary>
+        <ErrorBoundary><Projects repos={repos} /></ErrorBoundary>
+        <ErrorBoundary><Experiments /></ErrorBoundary>
+        <ErrorBoundary><Testimonials /></ErrorBoundary>
+        <ErrorBoundary><Contact /></ErrorBoundary>
         <Footer />
         <MobileNav />
       </main>

@@ -1,16 +1,27 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { useState, useEffect } from "react";
+import { PERSONAL, SOCIAL, HERO_ROLES } from "@/lib/constants";
 
 export default function Hero() {
+  const [roleIndex, setRoleIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRoleIndex((prev) => (prev + 1) % HERO_ROLES.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
   const socialLinks = [
-    { icon: FaLinkedin, href: "https://www.linkedin.com/in/siddhant-manna/", label: "LinkedIn" },
-    { icon: FaGithub, href: "https://github.com/TechnoAS", label: "GitHub" },
-    { icon: FaEnvelope, href: "mailto:official.siddhantmanna@gmail.com", label: "Email" },
+    { icon: FaLinkedin, href: SOCIAL.linkedin, label: "LinkedIn" },
+    { icon: FaGithub, href: SOCIAL.github, label: "GitHub" },
+    { icon: FaEnvelope, href: `mailto:${PERSONAL.email}`, label: "Email" },
   ];
 
   return (
@@ -205,18 +216,29 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
             className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold mb-4 sm:mb-6 font-[var(--font-bruno)] tracking-tight"
           >
-            <span className="block text-foreground">Siddhant Manna</span>
+            <span className="block text-foreground">{PERSONAL.name}</span>
           </motion.h1>
 
-          {/* Subtitle */}
-          <motion.h2
+          {/* Animated Subtitle */}
+          <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-            className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-foreground/50 mb-6 sm:mb-8 font-normal"
+            className="h-10 sm:h-12 md:h-14 lg:h-16 mb-6 sm:mb-8 flex items-center justify-center sm:justify-end overflow-hidden"
           >
-            Web Developer
-          </motion.h2>
+            <AnimatePresence mode="wait">
+              <motion.h2
+                key={roleIndex}
+                initial={{ y: 24, opacity: 0, filter: "blur(4px)" }}
+                animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
+                exit={{ y: -24, opacity: 0, filter: "blur(4px)" }}
+                transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+                className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-foreground/50 font-normal"
+              >
+                {HERO_ROLES[roleIndex]}
+              </motion.h2>
+            </AnimatePresence>
+          </motion.div>
 
           {/* Action Buttons */}
           <motion.div
@@ -238,7 +260,7 @@ export default function Hero() {
                 className="rounded-full w-full sm:w-auto px-6 sm:px-8 py-5 sm:py-6 text-sm sm:text-base font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:bg-primary/90"
               >
                 <Link
-                  href="/Siddhant Manna Java Dev.pdf"
+                  href={PERSONAL.resumePath}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="no-underline"
@@ -276,7 +298,7 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }}
             className="flex items-center justify-center sm:justify-end gap-5 sm:gap-6"
           >
-            {socialLinks.map((link, index) => {
+            {socialLinks.map((link) => {
               const Icon = link.icon;
               return (
                 <motion.div

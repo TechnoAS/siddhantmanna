@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
+import { PERSONAL } from "@/lib/constants";
 
 export default function Loading() {
   const loadingRef = useRef<HTMLDivElement>(null);
@@ -20,14 +21,14 @@ export default function Loading() {
       onStart: function () {
         letters.forEach((el, i) => {
           const letterEl = el as HTMLElement;
-          
+
           // Animate: dark → lit → dark
           gsap.to(letterEl, {
             color: "#ffffff",
             duration: 0.2,
             delay: i * 0.15,
           });
-          
+
           // Then back to dark
           gsap.to(letterEl, {
             color: "rgba(255,255,255,0.1)",
@@ -42,7 +43,7 @@ export default function Loading() {
           color: "#ffffff",
           duration: 0.3,
         });
-        
+
         // Then fade out the loading screen
         gsap.to("#loading", {
           opacity: 0,
@@ -65,7 +66,7 @@ export default function Loading() {
     };
   }, []);
 
-  const letters = ["S", "I", "D", "D", "H", "A", "N", "T"];
+  const nameLetters = PERSONAL.name.split(" ")[0].toUpperCase().split("");
 
   return (
     <div
@@ -74,13 +75,13 @@ export default function Loading() {
       className="fixed inset-0 bg-black flex items-center justify-center z-[9999]"
     >
       <div className="loading-text" id="name-loader">
-        {letters.map((letter, index) => (
+        {nameLetters.map((letter: string, index: number) => (
           <span
             key={index}
             data-text={letter}
             className="loading-letter"
           >
-            {letter}
+            {letter === " " ? "\u00A0" : letter}
           </span>
         ))}
       </div>

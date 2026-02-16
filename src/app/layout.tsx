@@ -6,6 +6,10 @@ import "./globals.css";
 import FaviconUpdater from "@/components/FaviconUpdater";
 import Loading from "@/components/Loading";
 import ScrollIndicator from "@/components/ScrollIndicator";
+import SkipToContent from "@/components/SkipToContent";
+
+import { Analytics } from "@vercel/analytics/next";
+import { PERSONAL, SOCIAL, SITE } from "@/lib/constants";
 
 const brunoAceSC = Bruno_Ace_SC({
   variable: "--font-bruno",
@@ -14,13 +18,11 @@ const brunoAceSC = Bruno_Ace_SC({
   display: "swap",
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://siddhantmanna.dev";
-const siteName = "Siddhant Manna - Full Stack Developer";
-const siteDescription = "Professional portfolio of Siddhant Manna, a full stack developer and final-year IT student specializing in React, Next.js, Node.js, TypeScript, and modern web technologies. Explore innovative projects, technical skills, and development experience.";
-const authorName = "Siddhant Manna";
-const authorEmail = "official.siddhantmanna@gmail.com";
-const authorLinkedIn = "https://www.linkedin.com/in/siddhant-manna/";
-const authorGitHub = "https://github.com/TechnoAS";
+const siteUrl = SITE.url;
+const siteName = SITE.name;
+const siteDescription = `Professional portfolio of ${PERSONAL.name}, a full stack developer and final-year IT student specializing in React, Next.js, Node.js, TypeScript, and modern web technologies. Explore innovative projects, technical skills, and development experience.`;
+const authorName = PERSONAL.name;
+const authorLinkedIn = SOCIAL.linkedin;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -61,7 +63,7 @@ export const metadata: Metadata = {
     "Wildlife Photographer",
   ],
   authors: [
-    { 
+    {
       name: authorName,
       url: authorLinkedIn,
     },
@@ -94,7 +96,7 @@ export const metadata: Metadata = {
         url: "/portfolio.png",
         width: 1200,
         height: 630,
-        alt: `${"Siddhant Manna"} - Full Stack Developer Portfolio`,
+        alt: `${PERSONAL.name} - ${PERSONAL.jobTitle} Portfolio`,
       },
     ],
   },
@@ -102,8 +104,8 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `${siteName} | Professional Portfolio`,
     description: siteDescription,
-    images: ["./img/portfolio.png"],
-    creator: "@yourusername", // Update with your actual Twitter handle
+    images: [SITE.ogImage],
+
   },
   robots: {
     index: true,
@@ -137,9 +139,21 @@ export default function RootLayout({
       <body
         className={`${brunoAceSC.variable} antialiased`}
       >
+        <SkipToContent />
         <Loading />
         <ScrollIndicator />
         <FaviconUpdater />
+
+        {/* Noise texture overlay */}
+        <div
+          className="fixed inset-0 pointer-events-none z-[1] opacity-[0.03]"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+            backgroundRepeat: "repeat",
+            backgroundSize: "256px 256px",
+          }}
+        />
+        <Analytics />
         {children}
       </body>
     </html>

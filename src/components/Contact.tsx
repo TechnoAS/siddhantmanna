@@ -1,10 +1,57 @@
 "use client";
 
+import { useState, FormEvent } from "react";
 import { motion } from "framer-motion";
-import { FaEnvelope, FaLinkedin, FaGithub } from "react-icons/fa";
+import { FaEnvelope, FaLinkedin, FaGithub, FaCheck, FaExclamationTriangle } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
+import { PERSONAL, SOCIAL } from "@/lib/constants";
+
+type FormStatus = "idle" | "submitting" | "success" | "error";
 
 export default function Contact() {
+  const [status, setStatus] = useState<FormStatus>("idle");
+  const [errorMsg, setErrorMsg] = useState("");
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    // Client-side validation
+    const name = formData.get("name") as string;
+    const email = formData.get("email") as string;
+    const message = formData.get("message") as string;
+
+    if (!name.trim() || !email.trim() || !message.trim()) {
+      setStatus("error");
+      setErrorMsg("Please fill in all required fields.");
+      return;
+    }
+
+    setStatus("submitting");
+
+    try {
+      // Formspree endpoint — replace YOUR_FORM_ID with your actual Formspree form ID
+      const res = await fetch("https://formspree.io/f/YOUR_FORM_ID", {
+        method: "POST",
+        body: formData,
+        headers: { Accept: "application/json" },
+      });
+
+      if (res.ok) {
+        setStatus("success");
+        form.reset();
+      } else {
+        const data = await res.json();
+        setStatus("error");
+        setErrorMsg(data?.errors?.[0]?.message || "Something went wrong. Please try again.");
+      }
+    } catch {
+      setStatus("error");
+      setErrorMsg("Network error. Please check your connection and try again.");
+    }
+  };
+
   return (
     <section
       id="contact"
@@ -20,7 +67,7 @@ export default function Contact() {
         >
           <div>
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 font-[var(--font-bruno)]">
-              <span className="text-foreground">Let's talk</span>
+              <span className="text-foreground">Let&apos;s talk</span>
             </h2>
             <p className="text-lg text-foreground/40 mb-8">
               New projects, freelance inquiry or even a coffee.
@@ -28,16 +75,17 @@ export default function Contact() {
           </div>
 
           {/* Contact Form */}
-          <form className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid gap-6 sm:grid-cols-2">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-foreground/50 mb-2">
-                  Name
+                  Name <span className="text-destructive">*</span>
                 </label>
                 <input
                   type="text"
                   id="name"
                   name="name"
+                  required
                   className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground/30 transition-all"
                   placeholder="Your name"
                 />
@@ -45,12 +93,13 @@ export default function Contact() {
 
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-foreground/50 mb-2">
-                  E-mail
+                  E-mail <span className="text-destructive">*</span>
                 </label>
                 <input
                   type="email"
                   id="email"
                   name="email"
+                  required
                   className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground/30 transition-all"
                   placeholder="your.email@example.com"
                 />
@@ -72,22 +121,47 @@ export default function Contact() {
 
             <div>
               <label htmlFor="message" className="block text-sm font-medium text-foreground/50 mb-2">
-                Message
+                Message <span className="text-destructive">*</span>
               </label>
               <textarea
                 id="message"
                 name="message"
                 rows={6}
+                required
                 className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground/30 transition-all resize-none"
                 placeholder="Your message"
               />
             </div>
 
+            {/* Status feedback */}
+            {status === "success" && (
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex items-center gap-2 text-sm text-green-500 bg-green-500/10 border border-green-500/20 rounded-lg px-4 py-3"
+              >
+                <FaCheck className="h-4 w-4 flex-shrink-0" />
+                <span>Message sent successfully! I&apos;ll get back to you soon.</span>
+              </motion.div>
+            )}
+
+            {status === "error" && (
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex items-center gap-2 text-sm text-red-500 bg-red-500/10 border border-red-500/20 rounded-lg px-4 py-3"
+              >
+                <FaExclamationTriangle className="h-4 w-4 flex-shrink-0" />
+                <span>{errorMsg}</span>
+              </motion.div>
+            )}
+
             <Button
               type="submit"
-              className="w-full sm:w-auto px-8 py-5 text-base font-medium bg-foreground text-background hover:opacity-90 transition-opacity"
+              disabled={status === "submitting"}
+              className="w-full sm:w-auto px-8 py-5 text-base font-medium bg-foreground text-background hover:opacity-90 transition-opacity disabled:opacity-50"
             >
-              Send Message
+              {status === "submitting" ? "Sending..." : "Send Message"}
             </Button>
           </form>
 
@@ -95,7 +169,7 @@ export default function Contact() {
           <div className="pt-8 border-t border-border">
             <div className="flex flex-wrap items-center gap-4 text-sm text-foreground/60">
               <a
-                href="https://www.linkedin.com/in/siddhant-manna/"
+                href={SOCIAL.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-full border border-border/50 px-4 py-2 hover:text-foreground hover:border-foreground transition-colors"
@@ -105,7 +179,7 @@ export default function Contact() {
                 <span>LinkedIn</span>
               </a>
               <a
-                href="https://github.com/TechnoAS"
+                href={SOCIAL.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-full border border-border/50 px-4 py-2 hover:text-foreground hover:border-foreground transition-colors"
@@ -115,7 +189,7 @@ export default function Contact() {
                 <span>GitHub</span>
               </a>
               <a
-                href="mailto:official.siddhantmanna@gmail.com"
+                href={`mailto:${PERSONAL.email}`}
                 className="inline-flex items-center gap-2 rounded-full border border-border/50 px-4 py-2 hover:text-foreground hover:border-foreground transition-colors"
                 aria-label="Email"
               >

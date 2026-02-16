@@ -3,11 +3,12 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { FaHome, FaUser, FaFolderOpen, FaCamera, FaEnvelope } from "react-icons/fa";
+import { FaHome, FaUser, FaBriefcase, FaFolderOpen, FaCamera, FaEnvelope } from "react-icons/fa";
 
 const navItems = [
   { name: "Home", href: "#home", icon: FaHome },
   { name: "About", href: "#about", icon: FaUser },
+  { name: "Experience", href: "#experience", icon: FaBriefcase },
   { name: "Projects", href: "#projects", icon: FaFolderOpen },
   { name: "Photography", href: "#photography", icon: FaCamera },
   { name: "Contact", href: "#contact", icon: FaEnvelope },
@@ -24,9 +25,9 @@ export default function MobileNav() {
         const element = document.getElementById(id);
         return { id, element, href: item.href };
       }).filter(item => item.element);
-      
+
       let current = "";
-      
+
       // If at top of page, set home as active
       if (window.scrollY < 50) {
         current = "home";
@@ -38,7 +39,7 @@ export default function MobileNav() {
             const rect = element.getBoundingClientRect();
             const sectionTop = rect.top;
             const sectionBottom = rect.bottom;
-            
+
             // Section is active if:
             // 1. Top of section is above or near the header offset
             // 2. Section is visible in viewport (bottom is below top of viewport)
@@ -48,12 +49,12 @@ export default function MobileNav() {
             }
           }
         }
-        
+
         // Fallback: if no section found, find the one closest to viewport top
         if (!current && sections.length > 0) {
           let closestSection = sections[0];
           let closestDistance = Math.abs(sections[0].element!.getBoundingClientRect().top - headerOffset);
-          
+
           for (const section of sections) {
             if (section.element) {
               const distance = Math.abs(section.element.getBoundingClientRect().top - headerOffset);
@@ -66,16 +67,16 @@ export default function MobileNav() {
           current = closestSection.id;
         }
       }
-      
+
       if (current) setActiveSection(`#${current}`);
     };
-    
+
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
-    
+
     // Also check on resize
     window.addEventListener("resize", handleScroll, { passive: true });
-    
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleScroll);
@@ -86,7 +87,7 @@ export default function MobileNav() {
     <nav className="fixed bottom-0 left-0 right-0 z-50 lg:hidden">
       {/* Glass morphism background with blur */}
       <div className="absolute inset-0 bg-background/95 backdrop-blur-2xl border-t border-border/50 shadow-[0_-4px_24px_rgba(0,0,0,0.1)] dark:shadow-[0_-4px_24px_rgba(0,0,0,0.3)]" />
-      
+
       {/* Safe area for iOS */}
       <div className="container mx-auto px-2 sm:px-4 pb-safe">
         <div className="flex items-center justify-around h-18 sm:h-20">
@@ -129,16 +130,14 @@ export default function MobileNav() {
                 {/* Icon container with advanced hover effects */}
                 <motion.div
                   whileTap={{ scale: 0.9 }}
-                  className={`relative p-2.5 sm:p-3 rounded-2xl transition-all duration-300 ${
-                    isActive
+                  className={`relative p-2.5 sm:p-3 rounded-2xl transition-all duration-300 ${isActive
                       ? "bg-foreground text-background"
                       : "text-foreground/40 group-active:text-foreground group-active:bg-muted"
-                  }`}
+                    }`}
                 >
-                  <Icon className={`h-5 w-5 sm:h-6 sm:w-6 transition-all duration-300 ${
-                    isActive ? "scale-110" : "group-hover:scale-110"
-                  }`} />
-                  
+                  <Icon className={`h-5 w-5 sm:h-6 sm:w-6 transition-all duration-300 ${isActive ? "scale-110" : "group-hover:scale-110"
+                    }`} />
+
                   {/* Ripple effect on active */}
                   {isActive && (
                     <motion.div
@@ -152,11 +151,10 @@ export default function MobileNav() {
 
                 {/* Label with better typography */}
                 <span
-                  className={`text-[9px] sm:text-[10px] font-semibold transition-all duration-300 leading-tight text-center ${
-                    isActive
+                  className={`text-[9px] sm:text-[10px] font-semibold transition-all duration-300 leading-tight text-center ${isActive
                       ? "text-foreground scale-105"
                       : "text-foreground/40 group-hover:text-foreground/60"
-                  }`}
+                    }`}
                 >
                   {item.name}
                 </span>

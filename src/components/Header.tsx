@@ -10,6 +10,7 @@ import {
   FaSun,
   FaHome,
   FaUser,
+  FaBriefcase,
   FaFolderOpen,
   FaCamera,
   FaEnvelope,
@@ -22,6 +23,7 @@ import iconDark from "@/app/iconDarkMode.png";
 const navItems = [
   { name: "Home", href: "#home", icon: FaHome },
   { name: "About", href: "#about", icon: FaUser },
+  { name: "Experience", href: "#experience", icon: FaBriefcase },
   { name: "Projects", href: "#projects", icon: FaFolderOpen },
   { name: "Photography", href: "#photography", icon: FaCamera },
   { name: "Contact", href: "#contact", icon: FaEnvelope },
@@ -37,7 +39,7 @@ export default function Header() {
   // Force dark mode on mobile screens
   useEffect(() => {
     const isMobile = window.matchMedia("(max-width: 640px)").matches;
-    
+
     if (isMobile) {
       // Force dark mode on mobile
       setIsDark(true);
@@ -73,7 +75,7 @@ export default function Header() {
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
-      
+
       // Update active section based on scroll position
       const headerOffset = 100;
       const sections = navItems.map(item => {
@@ -81,9 +83,9 @@ export default function Header() {
         const element = document.getElementById(id);
         return { id, element, href: item.href };
       }).filter(item => item.element);
-      
+
       let current = "";
-      
+
       // If at top of page, set home as active
       if (window.scrollY < 50) {
         current = "home";
@@ -96,7 +98,7 @@ export default function Header() {
             const sectionTop = rect.top;
             const sectionBottom = rect.bottom;
             const viewportHeight = window.innerHeight;
-            
+
             // Section is active if:
             // 1. Top of section is above or near the header offset
             // 2. Section is visible in viewport (bottom is below top of viewport)
@@ -106,12 +108,12 @@ export default function Header() {
             }
           }
         }
-        
+
         // Fallback: if no section found, find the one closest to viewport top
         if (!current && sections.length > 0) {
           let closestSection = sections[0];
           let closestDistance = Math.abs(sections[0].element!.getBoundingClientRect().top - headerOffset);
-          
+
           for (const section of sections) {
             if (section.element) {
               const distance = Math.abs(section.element.getBoundingClientRect().top - headerOffset);
@@ -124,16 +126,16 @@ export default function Header() {
           current = closestSection.id;
         }
       }
-      
+
       if (current) setActiveSection(`#${current}`);
     };
-    
+
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll(); // Initial check
-    
+
     // Also check on resize
     window.addEventListener("resize", handleScroll, { passive: true });
-    
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleScroll);
@@ -167,12 +169,11 @@ export default function Header() {
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
     >
       {/* Glassmorphism background - enhanced on scroll with gradient fade */}
-      <div 
-        className={`absolute inset-0 transition-all duration-300 ${
-          isScrolled
+      <div
+        className={`absolute inset-0 transition-all duration-300 ${isScrolled
             ? "backdrop-blur-xl border-b border-border/20 shadow-lg"
             : "bg-background/95 backdrop-blur-sm"
-        }`}
+          }`}
         style={{
           ...(isScrolled ? {
             background: "linear-gradient(to bottom, color-mix(in srgb, var(--background) 95%, transparent) 0%, color-mix(in srgb, var(--background) 90%, transparent) 15%, color-mix(in srgb, var(--background) 80%, transparent) 35%, color-mix(in srgb, var(--background) 65%, transparent) 55%, color-mix(in srgb, var(--background) 45%, transparent) 75%, color-mix(in srgb, var(--background) 25%, transparent) 90%, transparent 100%)",
@@ -186,7 +187,7 @@ export default function Header() {
           })
         }}
       />
-      
+
       <nav className="w-full relative">
         <div className="flex items-center justify-between h-16 md:h-20 gap-4 w-full">
           {/* Logo and Name Container - Left side with padding */}
@@ -241,15 +242,13 @@ export default function Header() {
                         setActiveSection(item.href);
                       }
                     }}
-                    className={`relative px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-2 group ${
-                      activeSection === item.href
+                    className={`relative px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-2 group ${activeSection === item.href
                         ? "text-foreground"
                         : "text-foreground/50 hover:text-foreground"
-                    }`}
+                      }`}
                   >
-                    <Icon className={`h-4 w-4 transition-transform duration-200 ${
-                      activeSection === item.href ? "scale-110" : "group-hover:scale-110"
-                    }`} />
+                    <Icon className={`h-4 w-4 transition-transform duration-200 ${activeSection === item.href ? "scale-110" : "group-hover:scale-110"
+                      }`} />
                     <span>{item.name}</span>
                     {activeSection === item.href && (
                       <motion.div
@@ -271,7 +270,7 @@ export default function Header() {
               onClick={() => {
                 const isMobile = window.matchMedia("(max-width: 640px)").matches;
                 if (isMobile) return; // Prevent theme toggle on mobile
-                
+
                 const newDarkState = !isDark;
                 setIsDark(newDarkState);
                 if (newDarkState) {
@@ -342,7 +341,7 @@ export default function Header() {
                 className="fixed inset-0 bg-background/80 backdrop-blur-sm z-40 lg:hidden"
                 onClick={() => setIsMobileMenuOpen(false)}
               />
-              
+
               {/* Drawer */}
               <motion.div
                 initial={{ x: "100%", opacity: 0 }}
@@ -350,10 +349,10 @@ export default function Header() {
                 exit={{ x: "100%", opacity: 0 }}
                 transition={{ type: "spring", damping: 25, stiffness: 200 }}
                 className="fixed top-16 md:top-20 right-0 bottom-0 w-80 max-w-[85vw] bg-background/98 backdrop-blur-xl shadow-2xl z-50 lg:hidden overflow-y-auto"
-              style={{
-                maskImage: "linear-gradient(to bottom, black 0%, black 95%, transparent 100%)",
-                WebkitMaskImage: "linear-gradient(to bottom, black 0%, black 95%, transparent 100%)"
-              }}
+                style={{
+                  maskImage: "linear-gradient(to bottom, black 0%, black 95%, transparent 100%)",
+                  WebkitMaskImage: "linear-gradient(to bottom, black 0%, black 95%, transparent 100%)"
+                }}
               >
                 <div className="p-6 space-y-2">
                   {navItems.map((item, index) => {
@@ -384,15 +383,13 @@ export default function Header() {
                               setActiveSection(item.href);
                             }
                           }}
-                          className={`flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all duration-200 group ${
-                            isActive
+                          className={`flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all duration-200 group ${isActive
                               ? "text-foreground bg-muted font-semibold"
                               : "text-foreground/50 hover:text-foreground hover:bg-muted/50"
-                          }`}
+                            }`}
                         >
-                          <Icon className={`h-5 w-5 transition-transform duration-200 ${
-                            isActive ? "scale-110" : "group-hover:scale-110"
-                          }`} />
+                          <Icon className={`h-5 w-5 transition-transform duration-200 ${isActive ? "scale-110" : "group-hover:scale-110"
+                            }`} />
                           <span className="text-base font-medium">{item.name}</span>
                           {isActive && (
                             <motion.div

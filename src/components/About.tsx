@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { PERSONAL } from "@/lib/constants";
 import {
   SiReact,
   SiNextdotjs,
@@ -78,8 +79,8 @@ export default function About() {
 
             <div className="space-y-4 sm:space-y-5 md:space-y-6 text-sm sm:text-base md:text-lg lg:text-xl text-foreground/60 leading-relaxed sm:leading-loose">
               <p>
-                I'm <strong className="text-foreground">Siddhant Manna</strong>, a final-year IT student at{" "}
-                <strong className="text-foreground">Meghnad Saha Institute of Technology</strong>, specializing in full-stack development. 
+                I'm <strong className="text-foreground">{PERSONAL.name}</strong>, a final-year IT student at{" "}
+                <strong className="text-foreground">{PERSONAL.university}</strong>, specializing in full-stack development.
                 I build scalable solutions using <strong className="text-foreground">Node.js</strong>, <strong className="text-foreground">React</strong>, and{" "}
                 <strong className="text-foreground">Next.js</strong>, transforming complex ideas into elegant digital experiences.
               </p>
@@ -88,8 +89,8 @@ export default function About() {
                 <strong className="text-foreground">Open to opportunities</strong> where I can contribute to meaningful projects and grow as a developer.
               </p>
               <p>
-                Beyond coding, I'm also a passionate <strong className="text-foreground">wildlife photographer</strong>, 
-                capturing the beauty of nature and wildlife through my lens. This hobby has taught me patience, attention to detail, 
+                Beyond coding, I'm also a passionate <strong className="text-foreground">wildlife photographer</strong>,
+                capturing the beauty of nature and wildlife through my lens. This hobby has taught me patience, attention to detail,
                 and the importance of seeing things from different perspectives—skills that translate seamlessly into my development work.
               </p>
             </div>
@@ -104,58 +105,50 @@ export default function About() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="w-full"
         >
-        <style dangerouslySetInnerHTML={{__html: `
-          .tech-icon-group .tech-icon {
-            color: #4b5563;
-            transition: color 0.7s ease, transform 0.7s ease;
-          }
-          .tech-icon-group:hover .tech-icon {
-            color: var(--hover-color) !important;
-          }
-        `}} />
-        <div className="relative w-full overflow-hidden py-4 sm:py-6 md:py-8 z-0" style={{ contain: 'layout style paint' }}>
-          {/* First row - Forward direction */}
-          <div className="flex gap-8 sm:gap-12 md:gap-16 lg:gap-20 animate-scroll mb-8 sm:mb-12 md:mb-16" style={{ willChange: 'transform' }}>
-            {[...techStack, ...techStack].map((tech, index) => {
-              const Icon = tech.icon;
-              return (
-                <div
-                  key={`forward-${index}`}
-                  className="flex-shrink-0 flex items-center gap-2 sm:gap-3 tech-icon-group group"
-                  style={{ '--hover-color': tech.hoverColor } as React.CSSProperties}
-                >
-                  <Icon 
-                    className="w-10 h-10 sm:w-14 sm:h-14 md:w-16 md:h-16 tech-icon group-hover:scale-110"
-                  />
-                  <span className="text-xs sm:text-sm md:text-base font-medium text-gray-600 dark:text-gray-400 whitespace-nowrap hidden sm:inline">
-                    {tech.name}
-                  </span>
-                </div>
-              );
-            })}
+
+          <div className="relative w-full overflow-hidden py-4 sm:py-6 md:py-8 z-0" style={{ contain: 'layout style paint' }}>
+            {/* First row - Forward direction */}
+            <div className="flex gap-8 sm:gap-12 md:gap-16 lg:gap-20 animate-scroll mb-8 sm:mb-12 md:mb-16" style={{ willChange: 'transform' }}>
+              {[...techStack, ...techStack].map((tech, index) => {
+                const Icon = tech.icon;
+                return (
+                  <div
+                    key={`forward-${index}`}
+                    className="flex-shrink-0 flex items-center gap-2 sm:gap-3 tech-icon-group group"
+                    style={{ '--hover-color': tech.hoverColor } as React.CSSProperties}
+                  >
+                    <Icon
+                      className="w-10 h-10 sm:w-14 sm:h-14 md:w-16 md:h-16 tech-icon group-hover:scale-110"
+                    />
+                    <span className="text-xs sm:text-sm md:text-base font-medium text-gray-600 dark:text-gray-400 whitespace-nowrap hidden sm:inline">
+                      {tech.name}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Second row - Reverse direction */}
+            <div className="flex gap-8 sm:gap-12 md:gap-16 lg:gap-20 animate-scroll-reverse" style={{ willChange: 'transform' }}>
+              {[...techStack, ...techStack].map((tech, index) => {
+                const Icon = tech.icon;
+                return (
+                  <div
+                    key={`reverse-${index}`}
+                    className="flex-shrink-0 flex items-center gap-2 sm:gap-3 tech-icon-group group"
+                    style={{ '--hover-color': tech.hoverColor } as React.CSSProperties}
+                  >
+                    <Icon
+                      className="w-10 h-10 sm:w-14 sm:h-14 md:w-16 md:h-16 tech-icon group-hover:scale-110"
+                    />
+                    <span className="text-xs sm:text-sm md:text-base font-medium text-gray-600 dark:text-gray-400 whitespace-nowrap hidden sm:inline">
+                      {tech.name}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
           </div>
-          
-          {/* Second row - Reverse direction */}
-          <div className="flex gap-8 sm:gap-12 md:gap-16 lg:gap-20 animate-scroll-reverse" style={{ willChange: 'transform' }}>
-            {[...techStack, ...techStack].map((tech, index) => {
-              const Icon = tech.icon;
-              return (
-                <div
-                  key={`reverse-${index}`}
-                  className="flex-shrink-0 flex items-center gap-2 sm:gap-3 tech-icon-group group"
-                  style={{ '--hover-color': tech.hoverColor } as React.CSSProperties}
-                >
-                  <Icon 
-                    className="w-10 h-10 sm:w-14 sm:h-14 md:w-16 md:h-16 tech-icon group-hover:scale-110"
-                  />
-                  <span className="text-xs sm:text-sm md:text-base font-medium text-gray-600 dark:text-gray-400 whitespace-nowrap hidden sm:inline">
-                    {tech.name}
-                  </span>
-                </div>
-              );
-            })}
-          </div>
-        </div>
         </motion.div>
       </div>
     </section>
