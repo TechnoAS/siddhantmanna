@@ -53,7 +53,7 @@ export default function AnimatedStats() {
     const inView = useInView(ref, { once: true, margin: "-100px" });
 
     return (
-        <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 relative overflow-hidden z-10 isolate bg-background">
+        <section className="px-4 sm:px-10 lg:px-12 py-16 sm:py-20 relative overflow-hidden z-10 isolate bg-background">
             <div ref={ref} className="container mx-auto max-w-5xl w-full">
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
                     {stats.map((stat, i) => {

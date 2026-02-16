@@ -203,7 +203,7 @@
     width: 60%;
     max-width: 200px;
     height: 1px;
-    margin: 0 auto;
+    margin: 0 auto 6rem;
     background: linear-gradient(90deg,
         transparent,
         var(--border) 50%,
