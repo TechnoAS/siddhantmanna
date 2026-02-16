@@ -89,8 +89,8 @@ export default function MobileNav() {
       <div className="absolute inset-0 bg-background/95 backdrop-blur-2xl border-t border-border/50 shadow-[0_-4px_24px_rgba(0,0,0,0.1)] dark:shadow-[0_-4px_24px_rgba(0,0,0,0.3)]" />
 
       {/* Safe area for iOS */}
-      <div className="container mx-auto px-2 sm:px-4 pb-safe">
-        <div className="flex items-center justify-around h-18 sm:h-20">
+      <div className="container mx-auto px-1 sm:px-4 pb-safe">
+        <div className="flex items-center justify-evenly h-16 sm:h-20">
           {navItems.map((item, index) => {
             const Icon = item.icon;
             const isActive = activeSection === item.href;
@@ -130,12 +130,12 @@ export default function MobileNav() {
                 {/* Icon container with advanced hover effects */}
                 <motion.div
                   whileTap={{ scale: 0.9 }}
-                  className={`relative p-2.5 sm:p-3 rounded-2xl transition-all duration-300 ${isActive
-                      ? "bg-foreground text-background"
-                      : "text-foreground/40 group-active:text-foreground group-active:bg-muted"
+                  className={`relative p-2 sm:p-3 rounded-2xl transition-all duration-300 ${isActive
+                    ? "bg-foreground text-background"
+                    : "text-foreground/40 group-active:text-foreground group-active:bg-muted"
                     }`}
                 >
-                  <Icon className={`h-5 w-5 sm:h-6 sm:w-6 transition-all duration-300 ${isActive ? "scale-110" : "group-hover:scale-110"
+                  <Icon className={`h-4 w-4 sm:h-6 sm:w-6 transition-all duration-300 ${isActive ? "scale-110" : "group-hover:scale-110"
                     }`} />
 
                   {/* Ripple effect on active */}
@@ -151,9 +151,9 @@ export default function MobileNav() {
 
                 {/* Label with better typography */}
                 <span
-                  className={`text-[9px] sm:text-[10px] font-semibold transition-all duration-300 leading-tight text-center ${isActive
-                      ? "text-foreground scale-105"
-                      : "text-foreground/40 group-hover:text-foreground/60"
+                  className={`text-[8px] sm:text-[10px] font-semibold transition-all duration-300 leading-tight text-center truncate max-w-[52px] ${isActive
+                    ? "text-foreground scale-105"
+                    : "text-foreground/40 group-hover:text-foreground/60"
                     }`}
                 >
                   {item.name}
