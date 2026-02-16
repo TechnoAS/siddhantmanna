@@ -105,7 +105,7 @@ export const metadata: Metadata = {
     title: `${siteName} | Professional Portfolio`,
     description: siteDescription,
     images: [SITE.ogImage],
-
+    creator: `@${PERSONAL.name.replace(/\s+/g, "").toLowerCase()}`,
   },
   robots: {
     index: true,
@@ -123,9 +123,17 @@ export const metadata: Metadata = {
   },
   category: "Portfolio",
   classification: "Portfolio Website",
+  referrer: "origin-when-cross-origin",
+  verification: {
+    // Add your verification codes when you register:
+    // google: "your-google-verification-code",
+    // yandex: "your-yandex-verification-code",
+  },
   other: {
     "theme-color": "#0C2B4E",
     "color-scheme": "dark light",
+    "google": "nositelinkssearchbox",
+    "msapplication-TileColor": "#0C2B4E",
   },
 };
 
