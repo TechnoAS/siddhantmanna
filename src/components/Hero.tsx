@@ -10,13 +10,27 @@ import { PERSONAL, SOCIAL, HERO_ROLES } from "@/lib/constants";
 
 export default function Hero() {
   const [roleIndex, setRoleIndex] = useState(0);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  useEffect(() => {
+    // Check for prefers-reduced-motion
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setPrefersReducedMotion(mediaQuery.matches);
+
+    const handleChange = (e: MediaQueryListEvent) => {
+      setPrefersReducedMotion(e.matches);
+    };
+
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setRoleIndex((prev) => (prev + 1) % HERO_ROLES.length);
-    }, 3000);
+    }, prefersReducedMotion ? 5000 : 3000);
     return () => clearInterval(interval);
-  }, []);
+  }, [prefersReducedMotion]);
 
   const socialLinks = [
     { icon: FaLinkedin, href: SOCIAL.linkedin, label: "LinkedIn" },
@@ -214,7 +228,7 @@ export default function Hero() {
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold mb-4 sm:mb-6 font-[var(--font-bruno)] tracking-tight"
+            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold mb-4 sm:mb-6 tracking-tighter text-white" style={{ fontFamily: "var(--font-display)" }}
           >
             <span className="block text-foreground">{PERSONAL.name}</span>
           </motion.h1>
@@ -233,7 +247,7 @@ export default function Hero() {
                 animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
                 exit={{ y: -24, opacity: 0, filter: "blur(4px)" }}
                 transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-                className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-foreground/50 font-normal"
+                className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-foreground/70 font-medium tracking-wide" style={{ fontFamily: "var(--font-display)" }}
               >
                 {HERO_ROLES[roleIndex]}
               </motion.h2>

@@ -70,7 +70,7 @@ export default function AnimatedStats() {
                                 <div className="inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-muted/50 border border-border/30 mb-3 group-hover:border-foreground/20 transition-colors">
                                     <Icon className="h-4 w-4 sm:h-5 sm:w-5 text-foreground/40 group-hover:text-foreground/60 transition-colors" />
                                 </div>
-                                <p className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground font-[var(--font-bruno)]">
+                                <p className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">
                                     <AnimatedNumber value={stat.value} suffix={stat.suffix} inView={inView} />
                                 </p>
                                 <p className="text-xs sm:text-sm text-foreground/40 mt-1">

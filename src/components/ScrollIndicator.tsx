@@ -4,14 +4,21 @@ import { useEffect } from "react";
 
 export default function ScrollIndicator() {
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const scrollPercent = (scrollTop / docHeight) * 100;
+    // Only run on client
+    if (typeof window === "undefined") return;
 
-      const progressBar = document.getElementById("scroll-indicator");
-      if (progressBar) {
-        progressBar.style.height = `${scrollPercent}%`;
+    const handleScroll = () => {
+      try {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollPercent = (scrollTop / docHeight) * 100;
+
+        const progressBar = document.getElementById("scroll-indicator");
+        if (progressBar) {
+          progressBar.style.height = `${scrollPercent}%`;
+        }
+      } catch (error) {
+        console.error("Scroll indicator error:", error);
       }
     };
 

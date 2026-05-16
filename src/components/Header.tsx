@@ -19,6 +19,7 @@ import Link from "next/link";
 import Image from "next/image";
 import iconLight from "@/app/iconLightMode.png";
 import iconDark from "@/app/iconDarkMode.png";
+import { initializeTheme, toggleTheme, listenToSystemThemeChanges } from "@/lib/theme";
 
 const navItems = [
   { name: "Home", href: "#home", icon: FaHome },
@@ -35,41 +36,17 @@ export default function Header() {
   const [isDark, setIsDark] = useState(false);
   const [activeSection, setActiveSection] = useState("");
 
-  // Initialize dark mode from system preference or localStorage
-  // Force dark mode on mobile screens
+  // Initialize dark mode on mount
   useEffect(() => {
-    const isMobile = window.matchMedia("(max-width: 640px)").matches;
+    const isDarkMode = initializeTheme();
+    setIsDark(isDarkMode);
 
-    if (isMobile) {
-      // Force dark mode on mobile
-      setIsDark(true);
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      // Desktop: use stored preference or system preference
-      const stored = localStorage.getItem("theme");
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      const shouldBeDark = stored ? stored === "dark" : prefersDark;
-      setIsDark(shouldBeDark);
-      if (shouldBeDark) {
-        document.documentElement.classList.add("dark");
-      } else {
-        document.documentElement.classList.remove("dark");
-      }
-    }
+    // Listen to system theme changes
+    const unsubscribe = listenToSystemThemeChanges((newIsDark) => {
+      setIsDark(newIsDark);
+    });
 
-    // Listen for window resize to handle mobile/desktop switching
-    const handleResize = () => {
-      const isMobileNow = window.matchMedia("(max-width: 640px)").matches;
-      if (isMobileNow) {
-        setIsDark(true);
-        document.documentElement.classList.add("dark");
-        localStorage.setItem("theme", "dark");
-      }
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    return unsubscribe;
   }, []);
 
   useEffect(() => {
@@ -198,7 +175,7 @@ export default function Header() {
                 window.scrollTo({ top: 0, behavior: "smooth" });
                 setActiveSection("#home");
               }}
-              className="flex items-center gap-3 text-base sm:text-lg md:text-xl font-bold text-foreground hover:opacity-70 transition-opacity font-[var(--font-bruno)] group"
+              className="flex items-center gap-3 text-base sm:text-lg md:text-xl font-bold text-foreground hover:opacity-70 transition-opacity group"
             >
               <motion.div
                 whileHover={{ scale: 1.1, rotate: 5 }}
@@ -213,7 +190,7 @@ export default function Header() {
                   priority
                 />
               </motion.div>
-              <span className="hidden sm:inline">Siddhant Manna</span>
+              <span className="hidden sm:inline"> </span>
             </Link>
           </div>
 
@@ -227,6 +204,7 @@ export default function Header() {
                   <Link
                     key={item.name}
                     href={item.href}
+                    aria-current={activeSection === item.href ? "page" : undefined}
                     onClick={(e) => {
                       e.preventDefault();
                       const targetId = item.href.substring(1);
@@ -268,18 +246,8 @@ export default function Header() {
               variant="ghost"
               size="icon"
               onClick={() => {
-                const isMobile = window.matchMedia("(max-width: 640px)").matches;
-                if (isMobile) return; // Prevent theme toggle on mobile
-
-                const newDarkState = !isDark;
+                const newDarkState = toggleTheme();
                 setIsDark(newDarkState);
-                if (newDarkState) {
-                  document.documentElement.classList.add("dark");
-                  localStorage.setItem("theme", "dark");
-                } else {
-                  document.documentElement.classList.remove("dark");
-                  localStorage.setItem("theme", "light");
-                }
                 // Dispatch custom event for favicon update
                 window.dispatchEvent(new Event("themechange"));
               }}
@@ -367,6 +335,7 @@ export default function Header() {
                       >
                         <Link
                           href={item.href}
+                          aria-current={isActive ? "page" : undefined}
                           onClick={(e) => {
                             e.preventDefault();
                             setIsMobileMenuOpen(false);

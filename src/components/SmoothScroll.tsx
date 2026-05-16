@@ -7,29 +7,33 @@ export default function SmoothScroll() {
   const pathname = usePathname();
 
   useEffect(() => {
-    // Enhanced smooth scroll behavior
+    // Enhanced smooth scroll behavior with error handling
     const handleSmoothScroll = (e: Event) => {
-      const target = e.target as HTMLElement;
-      const anchor = target.closest('a[href^="#"]');
-      
-      if (anchor) {
-        const href = anchor.getAttribute('href');
-        if (href && href !== '#') {
-          const targetId = href.substring(1);
-          const targetElement = document.getElementById(targetId);
-          
-          if (targetElement) {
-            e.preventDefault();
-            const headerOffset = 80;
-            const elementPosition = targetElement.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      try {
+        const target = e.target as HTMLElement;
+        const anchor = target.closest('a[href^="#"]');
+        
+        if (anchor) {
+          const href = anchor.getAttribute('href');
+          if (href && href !== '#') {
+            const targetId = href.substring(1);
+            const targetElement = document.getElementById(targetId);
+            
+            if (targetElement) {
+              e.preventDefault();
+              const headerOffset = 80;
+              const elementPosition = targetElement.getBoundingClientRect().top;
+              const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
-            window.scrollTo({
-              top: offsetPosition,
-              behavior: 'smooth'
-            });
+              window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+              });
+            }
           }
         }
+      } catch (error) {
+        console.error('Smooth scroll error:', error);
       }
     };
 

@@ -18,8 +18,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-bruno);
-  --font-bruno: var(--font-bruno);
+  --font-sans: var(--font-quicksand);
+  --font-quicksand: var(--font-quicksand);
+  --font-display: var(--font-display);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -213,65 +214,7 @@
   body {
     @apply bg-background text-foreground;
     font-size: 0.95rem;
-    font-family: var(--font-bruno), "Bruno Ace SC", sans-serif;
-  }
-
-
-  /* Force dark mode on mobile screens */
-  @media (max-width: 640px) {
-    html {
-      color-scheme: dark;
-    }
-
-    html:not(.dark) {
-      /* Apply dark mode styles even if class is not present */
-      --background: #000000;
-      --foreground: #FFFFFF;
-      --card: #0A0A0A;
-      --card-foreground: #FFFFFF;
-      --popover: #0A0A0A;
-      --popover-foreground: #FFFFFF;
-      --primary: #FFFFFF;
-      --primary-foreground: #000000;
-      --primary-hover: #E5E5E5;
-      --primary-light: #1A1A1A;
-      --secondary: #999999;
-      --secondary-foreground: #FFFFFF;
-      --secondary-hover: #B3B3B3;
-      --secondary-light: #1A1A1A;
-      --accent: #FFFFFF;
-      --accent-foreground: #000000;
-      --accent-hover: #E5E5E5;
-      --accent-light: #1A1A1A;
-      --muted: #1A1A1A;
-      --muted-foreground: #999999;
-      --muted-hover: #2A2A2A;
-      --border: #2A2A2A;
-      --input: #0A0A0A;
-      --input-border: #333333;
-      --ring: #FFFFFF;
-      --destructive: #EF4444;
-      --destructive-foreground: #FFFFFF;
-      --success: #22C55E;
-      --success-foreground: #FFFFFF;
-      --warning: #F59E0B;
-      --warning-foreground: #FFFFFF;
-      --info: #FFFFFF;
-      --info-foreground: #000000;
-      --chart-1: #FFFFFF;
-      --chart-2: #CCCCCC;
-      --chart-3: #999999;
-      --chart-4: #666666;
-      --chart-5: #333333;
-      --sidebar: #000000;
-      --sidebar-foreground: #FFFFFF;
-      --sidebar-primary: #FFFFFF;
-      --sidebar-primary-foreground: #000000;
-      --sidebar-accent: #1A1A1A;
-      --sidebar-accent-foreground: #FFFFFF;
-      --sidebar-border: #2A2A2A;
-      --sidebar-ring: #FFFFFF;
-    }
+    font-family: var(--font-quicksand), "Quicksand", sans-serif;
   }
 
   /* Mobile app-like touch targets */
@@ -524,10 +467,16 @@
   color: var(--foreground);
 }
 
-/* Bruno Ace SC Font Utility */
-.bruno-ace-sc-regular {
-  font-family: "Bruno Ace SC", sans-serif;
+/* Quicksand Font Utility */
+.quicksand-regular {
+  font-family: "Quicksand", sans-serif;
   font-weight: 400;
+  font-style: normal;
+}
+
+.quicksand-bold {
+  font-family: "Quicksand", sans-serif;
+  font-weight: 700;
   font-style: normal;
 }
 
@@ -761,7 +710,7 @@
 }
 
 .loading-text span {
-  font-family: var(--font-bruno), "Bruno Ace SC", sans-serif;
+  font-family: var(--font-quicksand), "Quicksand", sans-serif;
   font-size: 80px;
   color: rgba(255, 255, 255, 0.1);
   position: relative;

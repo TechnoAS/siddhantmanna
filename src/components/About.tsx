@@ -73,7 +73,7 @@ export default function About() {
             transition={{ duration: 0.8 }}
             className="space-y-4 sm:space-y-6 md:space-y-8"
           >
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 sm:mb-6 md:mb-8 font-[var(--font-bruno)] text-center">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 sm:mb-6 md:mb-8 text-center">
               <span className="text-foreground">About Me</span>
             </h2>
 

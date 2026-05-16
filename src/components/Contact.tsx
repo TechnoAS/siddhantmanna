@@ -31,8 +31,9 @@ export default function Contact() {
     setStatus("submitting");
 
     try {
-      // Formspree endpoint — replace YOUR_FORM_ID with your actual Formspree form ID
-      const res = await fetch("https://formspree.io/f/YOUR_FORM_ID", {
+      // Formspree endpoint — uses NEXT_PUBLIC_FORMSPREE_ID from environment
+      const formspreeId = process.env.NEXT_PUBLIC_FORMSPREE_ID || "YOUR_FORM_ID";
+      const res = await fetch(`https://formspree.io/f/${formspreeId}`, {
         method: "POST",
         body: formData,
         headers: { Accept: "application/json" },
@@ -66,7 +67,7 @@ export default function Contact() {
           className="space-y-12"
         >
           <div>
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 font-[var(--font-bruno)]">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4">
               <span className="text-foreground">Let&apos;s talk</span>
             </h2>
             <p className="text-lg text-foreground/40 mb-8">
@@ -140,7 +141,7 @@ export default function Contact() {
                 animate={{ opacity: 1, y: 0 }}
                 className="flex items-center gap-2 text-sm text-green-500 bg-green-500/10 border border-green-500/20 rounded-lg px-4 py-3"
               >
-                <FaCheck className="h-4 w-4 flex-shrink-0" />
+                <FaCheck className="h-4 w-4 shrink-0" />
                 <span>Message sent successfully! I&apos;ll get back to you soon.</span>
               </motion.div>
             )}
@@ -151,7 +152,7 @@ export default function Contact() {
                 animate={{ opacity: 1, y: 0 }}
                 className="flex items-center gap-2 text-sm text-red-500 bg-red-500/10 border border-red-500/20 rounded-lg px-4 py-3"
               >
-                <FaExclamationTriangle className="h-4 w-4 flex-shrink-0" />
+                <FaExclamationTriangle className="h-4 w-4 shrink-0" />
                 <span>{errorMsg}</span>
               </motion.div>
             )}

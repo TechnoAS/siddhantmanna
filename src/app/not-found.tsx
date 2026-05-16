@@ -23,7 +23,7 @@ export default function NotFound() {
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.6, delay: 0.1 }}
-                    className="text-8xl sm:text-9xl font-bold font-[var(--font-bruno)] text-foreground/10 select-none"
+                    className="text-8xl sm:text-9xl font-bold text-foreground/10 select-none"
                 >
                     404
                 </motion.h1>

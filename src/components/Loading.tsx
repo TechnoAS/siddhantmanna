@@ -8,10 +8,40 @@ export default function Loading() {
   const loadingRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Only run animations on client after DOM is ready
+    if (typeof window === "undefined") return;
+    // Check for prefers-reduced-motion
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
     // Prevent body scroll while loading
-    document.body.style.overflow = "hidden";
+    if (document.body) {
+      document.body.style.overflow = "hidden";
+    }
 
     const letters = document.querySelectorAll(".loading-text span");
+
+    // If user prefers reduced motion, skip animations and hide immediately
+    if (prefersReducedMotion) {
+      gsap.to("#loading", {
+        opacity: 0,
+        duration: 0.3,
+        delay: 0.5,
+        onComplete: () => {
+          const loadingElement = document.getElementById("loading");
+          if (loadingElement) {
+            loadingElement.style.display = "none";
+          }
+          if (document.body) {
+            document.body.style.overflow = "";
+          }
+        },
+      });
+      return () => {
+        if (document.body) {
+          document.body.style.overflow = "";
+        }
+      };
+    }
 
     // Animate each letter with stagger
     gsap.to(letters, {
@@ -55,14 +85,18 @@ export default function Loading() {
               loadingElement.style.display = "none";
             }
             // Re-enable body scroll
-            document.body.style.overflow = "";
+            if (document.body) {
+              document.body.style.overflow = "";
+            }
           },
         });
       },
     });
 
     return () => {
-      document.body.style.overflow = "";
+      if (document.body) {
+        document.body.style.overflow = "";
+      }
     };
   }, []);
 
@@ -72,7 +106,8 @@ export default function Loading() {
     <div
       id="loading"
       ref={loadingRef}
-      className="fixed inset-0 bg-black flex items-center justify-center z-[9999]"
+      className="fixed inset-0 bg-black flex items-center justify-center z-9999"
+      suppressHydrationWarning
     >
       <div className="loading-text" id="name-loader">
         {nameLetters.map((letter: string, index: number) => (

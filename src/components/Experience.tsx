@@ -48,7 +48,7 @@ export default function Experience() {
                     transition={{ duration: 0.8 }}
                     className="mb-8 sm:mb-16 text-center"
                 >
-                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-2 font-[var(--font-bruno)]">
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-2">
                         <span className="text-foreground">Experience</span>
                     </h2>
                     <p className="text-sm sm:text-base text-foreground/40 max-w-2xl mx-auto">
@@ -98,7 +98,7 @@ export default function Experience() {
                                             <span className="text-xs font-medium text-foreground/40 uppercase tracking-wider">
                                                 {entry.period}
                                             </span>
-                                            <h3 className="text-lg sm:text-xl font-bold text-foreground mt-1 font-[var(--font-bruno)]">
+                                            <h3 className="text-lg sm:text-xl font-bold text-foreground mt-1">
                                                 {entry.title}
                                             </h3>
                                             <p className="text-sm text-foreground/50 mt-0.5">

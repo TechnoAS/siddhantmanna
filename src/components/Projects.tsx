@@ -16,19 +16,6 @@ import Link from "next/link";
 import { SOCIAL } from "@/lib/constants";
 import { GitHubRepo } from "@/lib/github";
 
-interface GitHubRepoLocal {
-  id: number;
-  name: string;
-  description: string | null;
-  html_url: string;
-  homepage: string | null;
-  language: string | null;
-  stargazers_count: number;
-  forks_count: number;
-  topics: string[];
-  updated_at: string;
-}
-
 interface TechIcon {
   name: string;
   icon: React.ComponentType<{ className?: string }>;
@@ -116,9 +103,9 @@ export default function Projects({ repos = [] }: ProjectsProps) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="mb-4 sm:mb-6 text-center flex-shrink-0"
+          className="mb-4 sm:mb-6 text-center shrink-0"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-2 font-[var(--font-bruno)]">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-2">
             <span className="text-foreground">Projects</span>
           </h2>
           <p className="text-sm sm:text-base text-foreground/40 max-w-2xl mx-auto">
@@ -142,21 +129,21 @@ export default function Projects({ repos = [] }: ProjectsProps) {
               rel="noopener noreferrer"
               className="block group"
             >
-              <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-blue-500/10 via-cyan-500/10 to-blue-600/10 border border-border/50 hover:border-foreground/30 transition-all duration-500 hover:shadow-2xl">
+              <div className="relative overflow-hidden rounded-xl bg-linear-to-br from-blue-500/10 via-cyan-500/10 to-blue-600/10 border border-border/50 hover:border-foreground/30 transition-all duration-500 hover:shadow-2xl">
                 <div className="p-3 sm:p-4 md:p-8">
                   <div className="flex items-start justify-between mb-2 sm:mb-4">
                     <div className="flex-1">
                       <div className="inline-block px-1.5 py-0.5 sm:px-2 sm:py-1 mb-1 sm:mb-2 text-xs font-medium bg-blue-500/20 text-blue-400 rounded-full border border-blue-500/30">
                         Featured
                       </div>
-                      <h3 className="text-lg sm:text-2xl md:text-4xl font-bold text-foreground mb-1 sm:mb-2 font-[var(--font-bruno)] group-hover:text-foreground/80 transition-colors">
+                      <h3 className="text-lg sm:text-2xl md:text-4xl font-bold text-foreground mb-1 sm:mb-2 group-hover:text-foreground/80 transition-colors">
                         {featuredProject.name}
                       </h3>
                       <p className="text-xs sm:text-sm md:text-base text-foreground/60 leading-relaxed max-w-3xl mb-2 sm:mb-4 line-clamp-1 sm:line-clamp-2">
                         {featuredProject.description}
                       </p>
                     </div>
-                    <div className="ml-2 sm:ml-4 flex-shrink-0 opacity-0 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
+                    <div className="ml-2 sm:ml-4 shrink-0 opacity-0 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
                       <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-foreground/10 flex items-center justify-center">
                         <FaExternalLinkAlt className="h-3 w-3 sm:h-4 sm:w-4 text-foreground/60" />
                       </div>
@@ -208,7 +195,7 @@ export default function Projects({ repos = [] }: ProjectsProps) {
                   {/* Header */}
                   <div className="flex items-start justify-between mb-2 sm:mb-3">
                     <div className="flex-1 min-w-0">
-                      <h3 className="text-base sm:text-lg md:text-xl font-bold text-foreground mb-1 sm:mb-1.5 font-[var(--font-bruno)] truncate group-hover:text-foreground/80 transition-colors">
+                      <h3 className="text-base sm:text-lg md:text-xl font-bold text-foreground mb-1 sm:mb-1.5 truncate group-hover:text-foreground/80 transition-colors">
                         {repo.name}
                       </h3>
                       {/* Language - hidden on mobile */}
@@ -227,7 +214,7 @@ export default function Projects({ repos = [] }: ProjectsProps) {
                       href={repo.html_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="hidden sm:block text-foreground/30 hover:text-foreground transition-colors ml-2 flex-shrink-0"
+                      className="hidden sm:block text-foreground/30 hover:text-foreground transition-colors ml-2 shrink-0"
                       onClick={(e) => e.stopPropagation()}
                     >
                       <FaGithub className="h-4 w-4" />

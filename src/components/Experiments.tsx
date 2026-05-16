@@ -401,7 +401,7 @@ export default function Experiments() {
           <p className="uppercase tracking-[0.3em] sm:tracking-[0.35em] lg:tracking-[0.45em] text-[0.55rem] sm:text-[0.6rem] lg:text-xs text-black/60 dark:text-white/60">
             photography
           </p>
-          <h2 className="mt-2 sm:mt-3 lg:mt-4 text-2xl sm:text-3xl lg:text-5xl xl:text-6xl font-[var(--font-bruno)] text-black dark:text-white">
+          <h2 className="mt-2 sm:mt-3 lg:mt-4 text-2xl sm:text-3xl lg:text-5xl xl:text-6xl font-bold text-black dark:text-white">
             Living Archives
           </h2>
           <p className="mt-3 sm:mt-4 lg:mt-6 text-xs sm:text-sm lg:text-base text-black/80 dark:text-white/80 leading-relaxed sm:leading-relaxed">

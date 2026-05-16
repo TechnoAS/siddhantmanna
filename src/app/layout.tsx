@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Bruno_Ace_SC } from "next/font/google";
+import { Quicksand, Space_Grotesk } from "next/font/google";
 // Import global styles (Next.js global CSS); TypeScript may complain about side-effect CSS imports
 // @ts-ignore: Module declaration for '*.css' is missing
 import "./globals.css";
@@ -9,12 +9,20 @@ import ScrollIndicator from "@/components/ScrollIndicator";
 import SkipToContent from "@/components/SkipToContent";
 
 import { Analytics } from "@vercel/analytics/next";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { PERSONAL, SOCIAL, SITE } from "@/lib/constants";
 
-const brunoAceSC = Bruno_Ace_SC({
-  variable: "--font-bruno",
+const quicksand = Quicksand({
+  variable: "--font-quicksand",
   subsets: ["latin"],
-  weight: "400",
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-display",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -143,9 +151,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className={`scroll-smooth ${spaceGrotesk.variable}`} suppressHydrationWarning>
       <body
-        className={`${brunoAceSC.variable} antialiased`}
+        className={`${quicksand.variable} antialiased`}
+        suppressHydrationWarning
       >
         <SkipToContent />
         <Loading />
@@ -154,7 +163,7 @@ export default function RootLayout({
 
         {/* Noise texture overlay */}
         <div
-          className="fixed inset-0 pointer-events-none z-[1] opacity-[0.03]"
+          className="fixed inset-0 pointer-events-none z-1 opacity-[0.03]"
           style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
             backgroundRepeat: "repeat",
@@ -162,6 +171,7 @@ export default function RootLayout({
           }}
         />
         <Analytics />
+        <GoogleAnalytics gaId="G-Y0JJJGKLG0" />
         {children}
       </body>
     </html>
