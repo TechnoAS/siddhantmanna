@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import MobileNav from "@/components/MobileNav";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
+import Photography from "@/components/Photography";
 import Projects from "@/components/Projects";
 import Experiments from "@/components/Experiments";
 import Contact from "@/components/Contact";
@@ -91,6 +92,7 @@ export default async function Home() {
         <Header />
         <ErrorBoundary><Hero /></ErrorBoundary>
         <ErrorBoundary><About /></ErrorBoundary>
+        <ErrorBoundary><Photography /></ErrorBoundary>
         <ErrorBoundary><AnimatedStats /></ErrorBoundary>
         <ErrorBoundary><Experience /></ErrorBoundary>
         <ErrorBoundary><Projects repos={repos} /></ErrorBoundary>

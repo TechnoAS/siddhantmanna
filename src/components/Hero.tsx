@@ -41,7 +41,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="min-h-screen h-screen flex flex-col sm:flex-row items-center justify-center px-4 sm:px-6 lg:px-8 mt-8 sm:mt-24 relative overflow-hidden z-0"
+      className="min-h-screen h-screen flex flex-col sm:flex-row items-center justify-center px-4 sm:px-6 lg:px-8 mt-8 sm:mt-16 relative overflow-hidden z-0 bg-gradient-to-b from-background via-background to-primary/5"
     >
       {/* Hero Image - Mobile: Top, Desktop: Left side */}
       {/* Mobile Hero Image - Above text */}

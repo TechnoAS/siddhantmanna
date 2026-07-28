@@ -28,7 +28,7 @@ const spaceGrotesk = Space_Grotesk({
 
 const siteUrl = SITE.url;
 const siteName = SITE.name;
-const siteDescription = `Professional portfolio of ${PERSONAL.name}, a full stack developer and final-year IT student specializing in React, Next.js, Node.js, TypeScript, and modern web technologies. Explore innovative projects, technical skills, and development experience.`;
+const siteDescription = `Professional portfolio of ${PERSONAL.name}, a full stack developer and wildlife photographer. Showcasing innovative projects, technical expertise in React & Next.js, and stunning wildlife photography. Explore development work and nature photography gallery.`;
 const authorName = PERSONAL.name;
 const authorLinkedIn = SOCIAL.linkedin;
 
@@ -42,6 +42,7 @@ export const metadata: Metadata = {
   keywords: [
     "Siddhant Manna",
     "Full Stack Developer",
+    "Wildlife Photographer",
     "Web Developer",
     "React Developer",
     "Next.js Developer",
@@ -68,7 +69,10 @@ export const metadata: Metadata = {
     "Framer Motion",
     "Web Development",
     "Software Development",
-    "Wildlife Photographer",
+    "Nature Photography",
+    "Photography Gallery",
+    "Developer Portfolio",
+    "Full Stack Portfolio",
   ],
   authors: [
     {
