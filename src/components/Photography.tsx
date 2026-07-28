@@ -107,14 +107,14 @@ export default function Photography() {
             <motion.div
               key={photo.id}
               variants={itemVariants}
-              className={`group relative overflow-hidden rounded-xl bg-muted/30 border border-border/50 hover:border-foreground/30 transition-all duration-500 cursor-pointer hover:shadow-xl ${
+              className={`group relative overflow-hidden rounded-xl bg-muted/30 border-2 border-accent/30 hover:border-accent/80 transition-all duration-500 cursor-pointer hover:shadow-2xl hover:shadow-accent/20 ${
                 photo.aspect === "landscape" ? "lg:col-span-1" : ""
               }`}
               whileHover={{ y: -4 }}
             >
               {/* Photo Placeholder with Gradient */}
               <div
-                className={`relative w-full overflow-hidden bg-gradient-to-br from-primary/20 via-accent/20 to-secondary/20 ${
+                className={`relative w-full overflow-hidden bg-gradient-to-br from-primary/40 via-accent/30 to-secondary/25 ${
                   photo.aspect === "landscape"
                     ? "aspect-video"
                     : photo.aspect === "portrait"
@@ -155,7 +155,7 @@ export default function Photography() {
           <p className="text-foreground/60 mb-4 text-sm">
             Explore more wildlife photography on my gallery
           </p>
-          <button className="px-8 py-3 rounded-full bg-primary text-primary-foreground font-medium hover:bg-primary-hover transition-all duration-300 shadow-lg hover:shadow-xl">
+          <button className="px-8 py-3 rounded-full bg-accent text-foreground font-semibold hover:bg-accent/90 transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-accent/40 border border-accent/50">
             View Full Gallery
           </button>
         </motion.div>

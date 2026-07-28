@@ -293,7 +293,7 @@ export default function Hero() {
                 asChild
                 variant="outline"
                 size="lg"
-                className="rounded-full w-full sm:w-auto px-6 sm:px-8 py-5 sm:py-6 text-sm sm:text-base font-medium border-2 hover:bg-muted/50 hover:border-primary/50 transition-all duration-300"
+                className="rounded-full w-full sm:w-auto px-6 sm:px-8 py-5 sm:py-6 text-sm sm:text-base font-medium border-2 border-accent/50 text-accent hover:bg-accent/10 hover:border-accent hover:text-accent transition-all duration-300"
               >
                 <Link
                   href="#contact"
