@@ -7,6 +7,7 @@ import FaviconUpdater from "@/components/FaviconUpdater";
 import Loading from "@/components/Loading";
 import ScrollIndicator from "@/components/ScrollIndicator";
 import SkipToContent from "@/components/SkipToContent";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 import { Analytics } from "@vercel/analytics/next";
 import { GoogleAnalytics } from "@next/third-parties/google";
@@ -155,28 +156,30 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`scroll-smooth ${spaceGrotesk.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`scroll-smooth ${spaceGrotesk.variable} bg-background text-foreground`} suppressHydrationWarning>
       <body
-        className={`${quicksand.variable} antialiased`}
+        className={`${quicksand.variable} antialiased bg-background text-foreground`}
         suppressHydrationWarning
       >
-        <SkipToContent />
-        <Loading />
-        <ScrollIndicator />
-        <FaviconUpdater />
+        <ThemeProvider>
+          <SkipToContent />
+          <Loading />
+          <ScrollIndicator />
+          <FaviconUpdater />
 
-        {/* Noise texture overlay */}
-        <div
-          className="fixed inset-0 pointer-events-none z-1 opacity-[0.03]"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
-            backgroundRepeat: "repeat",
-            backgroundSize: "256px 256px",
-          }}
-        />
-        <Analytics />
-        <GoogleAnalytics gaId="G-Y0JJJGKLG0" />
-        {children}
+          {/* Noise texture overlay */}
+          <div
+            className="fixed inset-0 pointer-events-none z-1 opacity-[0.03]"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+              backgroundRepeat: "repeat",
+              backgroundSize: "256px 256px",
+            }}
+          />
+          <Analytics />
+          <GoogleAnalytics gaId="G-Y0JJJGKLG0" />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
